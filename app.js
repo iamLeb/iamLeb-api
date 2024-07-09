@@ -1,21 +1,49 @@
 const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const PORT = process.env.PORT || 3000;
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 require('dotenv').config();
-require('./configs/database');
+require("./configs/database");
 
-app.use(cors({
-    origin: ['http://localhost:8080'],
-    credentials: true,
-}));
+class App {
+    constructor() {
+        this.app = express();
+        this.port = process.env.PORT || 3000;
+        this.cors = require("cors");
+        this.middlewares();
+        this.routes();
+        this.start();
+    }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser())
+    middlewares() {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(cookieParser());
+        this.app.use(cors({
+            origin: ['http://localhost:3000'],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            credentials: true
+        }));
 
-app.use('/auth', require('./routes/auth'));
+        // Error handling middleware
+        this.app.use((error, req, res, next) => {
+            console.error(error.stack);
+            res.status(500).send({ error: error.message });
+        });
+    }
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+    routes () {
+        this.app.get('/', (req, res) => {
+            res.status(200).json('index');
+        });
+
+        this.app.use('/auth', require('./routes/auth'));
+    }
+
+    start() {
+        this.app.listen(this.port, () => console.log(`Listening on port ${this.port}`));
+    }
+}
+
+new App();
