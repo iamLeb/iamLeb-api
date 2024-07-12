@@ -24,12 +24,6 @@ class App {
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true
         }));
-
-        // Error handling middleware
-        this.app.use((error, req, res, next) => {
-            console.error(error.stack);
-            res.status(500).send({ error: error.message });
-        });
     }
 
 
@@ -39,6 +33,16 @@ class App {
         });
 
         this.app.use('/auth', require('./routes/auth'));
+        this.app.use('/contact', require('./routes/contact'));
+
+        // error handler
+        this.app.use((err, req, res, next) => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            return res.status(err.statusCode).json({ error: err.message });
+
+        });
     }
 
     start() {
