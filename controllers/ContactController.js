@@ -1,4 +1,4 @@
-const validation = require('../middlewares/validation');
+const validation = require('../middlewares/Validation');
 const Contact = require('../models/Contact');
 const Service = require('../helpers/Service');
 const User = require("../models/User");
