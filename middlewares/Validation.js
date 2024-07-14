@@ -15,7 +15,7 @@ const isEmpty = (data) => {
 // Example validation functions
 const validateEmail = (email) => {
     if (!validator.isEmail(email)) {
-        throw new Error('Invalid email');
+        throw new Error('Invalid email'); // throw new error
     }
 };
 
