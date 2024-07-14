@@ -19,13 +19,13 @@ class App {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cookieParser());
+
         this.app.use(cors({
-            origin: ['http://localhost:3000'],
+            origin: [process.env.VITE_CORS],
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true
         }));
     }
-
 
     routes () {
         this.app.get('/', (req, res) => {
@@ -33,7 +33,9 @@ class App {
         });
 
         this.app.use('/auth', require('./routes/auth'));
+        this.app.use('/user', require('./routes/user'));
         this.app.use('/contact', require('./routes/contact'));
+        this.app.use('/client', require('./routes/client'));
 
         // error handler
         this.app.use((err, req, res, next) => {
