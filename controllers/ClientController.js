@@ -1,30 +1,46 @@
 const validation = require('../middlewares/validation');
 const Client = require('../models/Client');
+const User = require('../models/User'); // Assuming you have a User model
 const Service = require('../helpers/Service');
+const { getUser } = require('../controllers/GlobalController');
+
 
 const create = async (req, res) => {
     try {
-        validation.isEmpty(req.body);
+        const service = new Service();
         validation.validateEmail(req.body.email);
 
-        const service = new Service();
-        const client = await service.create(Client, req.body);
+        const { services, fullName, email, phoneNumber, role = 'client', message } = req.body;
 
-        return res.status(201).json(client);
+        let user = await service.getByField(User, 'email', email);
+        let client;
 
+        if (user) {
+            client = await service.create(Client, { userId: user._id, message, services });
+        } else {
+            user = await service.create(User, { name: fullName, email, phone: phoneNumber, role });
+            client = await service.create(Client, { userId: user._id, message, services });
+        }
+
+        return res.status(200).json(client);
     } catch (e) {
-        return res.status(400).send({error: e.message })
+        console.error("Error in create function:", e); // Log the error
+        return res.status(400).json({ error: e.message });
     }
-}
+};
+
+
 const read = async (req, res) => {
     try {
-        const service = new Service();
-        const clients = await service.get(Client);
-        return res.status(200).json(clients);
+        const combinedData = await getUser(Service, User, Client);
+
+        // Return the combined data as JSON response
+        return res.status(200).json(combinedData);
     } catch (e) {
-        return res.status(400).send({error: e.message})
+        return res.status(400).json({ error: e.message });
     }
-}
+};
+
 const readOne = async (req, res) => {
     try {
         const id = req.params.id;
@@ -32,9 +48,10 @@ const readOne = async (req, res) => {
         const client = await service.getOne(Client, id);
         return res.status(200).json(client);
     } catch (e) {
-        return res.status(400).send({error: e.message})
+        return res.status(400).send({ error: e.message });
     }
-}
+};
+
 const update = async (req, res) => {
     try {
         const id = req.params.id;
@@ -45,9 +62,10 @@ const update = async (req, res) => {
         const client = await service.update(Client, id, req.body);
         return res.status(200).json(client);
     } catch (e) {
-        return res.status(400).send({error: e.message})
+        return res.status(400).send({ error: e.message });
     }
-}
+};
+
 const destroy = async (req, res) => {
     try {
         const id = req.params.id;
@@ -55,9 +73,9 @@ const destroy = async (req, res) => {
         await service.delete(Client, id);
         return res.status(200).json("Deleted");
     } catch (e) {
-        return res.status(400).json({error: e.message})
+        return res.status(400).json({ error: e.message });
     }
-}
+};
 
 module.exports = {
     create,
@@ -65,4 +83,4 @@ module.exports = {
     readOne,
     update,
     destroy
-}
+};

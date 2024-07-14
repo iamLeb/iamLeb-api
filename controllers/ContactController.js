@@ -8,7 +8,9 @@ const create = async (req, res) => {
         const service = new Service();
         validation.isEmpty(req.body);
         validation.validateEmail(req.body.email);
-        const { name, email, phone, role = 'client', message } = req.body;
+
+        const { name, email, phone, role = 'contact', message } = req.body;
+        console.log(req.body);
 
         // Find existing user or contact by email
         let user = await service.getByField(User, 'email', email);
@@ -33,6 +35,8 @@ const create = async (req, res) => {
 const read = async (req, res) => {
     try {
         // Call the getUser function passing Service, User, and Contact
+    
+
         const combinedData = await getUser(Service, User, Contact);
 
         // Return the combined data as JSON response
