@@ -1,7 +1,7 @@
 const express = require('express');
 // const cors = require("cors");
 require('dotenv').config();
-require("./configs/database");
+// require("./configs/database");
 
 class App {
     constructor() {
@@ -26,7 +26,7 @@ class App {
 
     routes() {
         this.app.get('/', (req, res) => {
-            res.status(200).json('index');
+            return res.status(200).json('index');
         });
 
         // this.app.use('/auth', require('./routes/auth'));
