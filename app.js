@@ -4,18 +4,13 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 require('dotenv').config();
 require("./configs/database");
-const authRoute = require('./routes/auth')
-const userRoute = require('./routes/user')
-const contactRoute = require('./routes/contact')
-const clientRoute = require('./routes/client')
-const categoryRoute = require('./routes/category')
 
 class App {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || 3000;
-        // this.cors = require("cors");
-        // this.middlewares();
+        this.cors = require("cors");
+        this.middlewares();
         this.routes();
         this.start();
     }
@@ -37,11 +32,11 @@ class App {
             res.status(200).json('index');
         });
 
-        this.app.use('/auth', authRoute);
-        this.app.use('/user', userRoute);
-        this.app.use('/contact', contactRoute);
-        this.app.use('/client', clientRoute);
-        this.app.use('/category', categoryRoute);
+        this.app.use('/auth', require('./routes/auth'));
+        this.app.use('/user', require('./routes/user'));
+        this.app.use('/contact', require('./routes/contact'));
+        this.app.use('/client', require('./routes/client'));
+        this.app.use('/category', require('./routes/category'));
 
         // error handler
         this.app.use((err, req, res, next) => {
