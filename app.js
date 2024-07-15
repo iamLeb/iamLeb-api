@@ -9,15 +9,15 @@ class App {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || 3000;
-        // this.middlewares();
+        this.middlewares();
         this.routes();
         this.start();
     }
 
     middlewares() {
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.app.use(cookieParser());
+        // this.app.use(bodyParser.json());
+        // this.app.use(bodyParser.urlencoded({ extended: false }));
+        // this.app.use(cookieParser());
 
         this.app.use(cors({
             origin: [process.env.VITE_CORS],
