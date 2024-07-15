@@ -5,6 +5,12 @@ const CategorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    short: String,
+    overview: String,
+    services: [String],
+    why: String,
+    proceed: String,
+
 }, { timestamps: true });
 
 const Category = mongoose.model('Category', CategorySchema);

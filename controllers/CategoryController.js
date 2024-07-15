@@ -6,10 +6,12 @@ const Service = require('../helpers/Service');
 const create = async (req, res) => {
     try {
         const service = new Service();
-        validation.isEmpty(req.body);
+        console.log(req.body);
 
-        const { name } = req.body;
 
+        const { name, short, overview, services, why, proceed } = req.body;
+
+        
         // check if category already exist
         const exist = await service.getByField(Category, 'name', name);
         if (exist) return res.status(400).json({ error: 'Category already exist'});
@@ -50,7 +52,6 @@ const readOne = async (req, res) => {
 const update = async (req, res) => {
     try {
         const id = req.params.id;
-        validation.isEmpty(req.body);
 
         const service = new Service();
         const category = await service.update(Category, id, req.body);

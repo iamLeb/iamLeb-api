@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 require('dotenv').config();
-require('./configs/database');
+require('./configs/database'); // Assuming this file handles database connection properly
 
 class App {
     constructor() {
@@ -11,7 +11,6 @@ class App {
         this.port = process.env.PORT || 3000;
         this.middlewares();
         this.routes();
-        this.errorHandler();
         this.start();
     }
 
@@ -20,7 +19,7 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cookieParser());
         this.app.use(cors({
-            origin: [process.env.VITE_CORS],
+            origin: process.env.VITE_CORS, // Assuming VITE_CORS is a single origin URL
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true
         }));
@@ -35,20 +34,11 @@ class App {
         this.app.use('/user', require('./routes/user'));
         this.app.use('/contact', require('./routes/contact'));
         this.app.use('/client', require('./routes/client'));
-    }
-
-    errorHandler() {
-        // error handler
-        this.app.use((err, req, res, next) => {
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            return res.status(err.statusCode).json({ error: err.message });
-        });
+        this.app.use('/category', require('./routes/category'));
     }
 
     start() {
-        this.app.listen(this.port, () => console.log(`Listening on port ${this.port}`));
+        this.app.listen(this.port, () => console.log(`Server is running on port ${this.port}`));
     }
 }
 
