@@ -15,15 +15,15 @@ class App {
     }
 
     middlewares() {
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.app.use(cookieParser());
+        // this.app.use(bodyParser.json());
+        // this.app.use(bodyParser.urlencoded({ extended: false }));
+        // this.app.use(cookieParser());
 
-        this.app.use(cors({
-            origin: process.env.VITE_CORS,
-            methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            credentials: true
-        }));
+        // this.app.use(cors({
+        //     origin: process.env.VITE_CORS,
+        //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        //     credentials: true
+        // }));
     }
 
     routes() {
