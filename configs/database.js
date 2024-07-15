@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
+
 
 // Ensure you have the environment variable set correctly
 console.log(process.env.DB_URI); // This is for debugging purposes
