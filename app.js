@@ -38,13 +38,13 @@ class App {
         // this.app.use('/category', require('./routes/category'));
 
         // error handler
-        this.app.use((err, req, res, next) => {
-            console.error(err); // Log the error for debugging purposes
-            if (!err.statusCode) {
-                err.statusCode = 500;
-            }
-            return res.status(err.statusCode).json({ error: err.message });
-        });
+        // this.app.use((err, req, res, next) => {
+        //     console.error(err); // Log the error for debugging purposes
+        //     if (!err.statusCode) {
+        //         err.statusCode = 500;
+        //     }
+        //     return res.status(err.statusCode).json({ error: err.message });
+        // });
     }
 
     start() {
