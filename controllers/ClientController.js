@@ -1,4 +1,4 @@
-const validation = require('../middlewares/Validation');
+const validation = require('../middlewares/validation');
 const Client = require('../models/Client');
 const User = require('../models/User'); // Assuming you have a User model
 const Service = require('../helpers/Service');

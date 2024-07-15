@@ -9,11 +9,9 @@ const clientSchema = new Schema({
 },
   services: {
     type: [String], // Array of strings
-    required: true
   },
   message: {
     type: String,
-    required: true
   }
 }, { timestamps: true });
 
