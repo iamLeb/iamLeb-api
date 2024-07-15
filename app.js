@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
+// const cookieParser = require("cookie-parser");
+// const cors = require("cors");
 require('dotenv').config();
 require("./configs/database");
 
@@ -9,22 +9,22 @@ class App {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || 3000;
-        this.middlewares();
+        // this.middlewares();
         this.routes();
         this.start();
     }
 
-    middlewares() {
-        // this.app.use(bodyParser.json());
-        // this.app.use(bodyParser.urlencoded({ extended: false }));
-        // this.app.use(cookieParser());
+    // middlewares() {
+    //     this.app.use(bodyParser.json());
+    //     this.app.use(bodyParser.urlencoded({ extended: false }));
+    //     this.app.use(cookieParser());
 
-        // this.app.use(cors({
-        //     origin: process.env.VITE_CORS,
-        //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        //     credentials: true
-        // }));
-    }
+    //     this.app.use(cors({
+    //         origin: process.env.VITE_CORS,
+    //         methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    //         credentials: true
+    //     }));
+    // }
 
     routes() {
         this.app.get('/', (req, res) => {
@@ -37,7 +37,7 @@ class App {
         // this.app.use('/client', require('./routes/client'));
         // this.app.use('/category', require('./routes/category'));
 
-        // error handler
+        // //error handler
         // this.app.use((err, req, res, next) => {
         //     console.error(err); // Log the error for debugging purposes
         //     if (!err.statusCode) {
