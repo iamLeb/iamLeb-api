@@ -9,7 +9,6 @@ class App {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || 3000;
-        this.cors = require("cors");
         this.middlewares();
         this.routes();
         this.start();
@@ -27,7 +26,7 @@ class App {
         }));
     }
 
-    routes () {
+    routes() {
         this.app.get('/', (req, res) => {
             res.status(200).json('index');
         });
@@ -44,7 +43,6 @@ class App {
                 err.statusCode = 500;
             }
             return res.status(err.statusCode).json({ error: err.message });
-
         });
     }
 
