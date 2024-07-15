@@ -1,48 +1,50 @@
 const express = require('express');
-// const cors = require("cors");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 require('dotenv').config();
-require("./configs/database");
+require('./configs/database');
 
 class App {
     constructor() {
         this.app = express();
         this.port = process.env.PORT || 3000;
-        // this.middlewares();
+        this.middlewares();
         this.routes();
+        this.errorHandler();
         this.start();
     }
 
-    // middlewares() {
-    //     this.app.use(require("body-parser"));
-    //     this.app.use(bodyParser.urlencoded({ extended: false }));
-    //     this.app.use(require("cookie-parser"));
-
-    //     this.app.use(cors({
-    //         origin: process.env.VITE_CORS,
-    //         methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    //         credentials: true
-    //     }));
-    // }
+    middlewares() {
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(cookieParser());
+        this.app.use(cors({
+            origin: [process.env.VITE_CORS],
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            credentials: true
+        }));
+    }
 
     routes() {
         this.app.get('/', (req, res) => {
-            return res.status(200).json('index');
+            res.status(200).json('index');
         });
 
-        // this.app.use('/auth', require('./routes/auth'));
-        // this.app.use('/user', require('./routes/user'));
-        // this.app.use('/contact', require('./routes/contact'));
-        // this.app.use('/client', require('./routes/client'));
-        // this.app.use('/category', require('./routes/category'));
+        this.app.use('/auth', require('./routes/auth'));
+        this.app.use('/user', require('./routes/user'));
+        this.app.use('/contact', require('./routes/contact'));
+        this.app.use('/client', require('./routes/client'));
+    }
 
-        // //error handler
-        // this.app.use((err, req, res, next) => {
-        //     console.error(err); // Log the error for debugging purposes
-        //     if (!err.statusCode) {
-        //         err.statusCode = 500;
-        //     }
-        //     return res.status(err.statusCode).json({ error: err.message });
-        // });
+    errorHandler() {
+        // error handler
+        this.app.use((err, req, res, next) => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            return res.status(err.statusCode).json({ error: err.message });
+        });
     }
 
     start() {
