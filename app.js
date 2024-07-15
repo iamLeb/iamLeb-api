@@ -10,7 +10,7 @@ class App {
         this.app = express();
         this.port = process.env.PORT || 3000;
         // this.cors = require("cors");
-        // this.middlewares();
+        this.middlewares();
         this.routes();
         this.start();
     }
@@ -32,20 +32,20 @@ class App {
             res.status(200).json('index');
         });
 
-        // this.app.use('/auth', require('./routes/auth'));
-        // this.app.use('/user', require('./routes/user'));
-        // this.app.use('/contact', require('./routes/contact'));
-        // this.app.use('/client', require('./routes/client'));
-        // this.app.use('/category', require('./routes/category'));
+        this.app.use('/auth', require('./routes/auth'));
+        this.app.use('/user', require('./routes/user'));
+        this.app.use('/contact', require('./routes/contact'));
+        this.app.use('/client', require('./routes/client'));
+        this.app.use('/category', require('./routes/category'));
 
-        // // error handler
-        // this.app.use((err, req, res, next) => {
-        //     if (!err.statusCode) {
-        //         err.statusCode = 500;
-        //     }
-        //     return res.status(err.statusCode).json({ error: err.message });
+        // error handler
+        this.app.use((err, req, res, next) => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            return res.status(err.statusCode).json({ error: err.message });
 
-        // });
+        });
     }
 
     start() {
