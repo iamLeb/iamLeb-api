@@ -15,12 +15,12 @@ class App {
     }
 
     middlewares() {
-        // this.app.use(bodyParser.json());
-        // this.app.use(bodyParser.urlencoded({ extended: false }));
-        // this.app.use(cookieParser());
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(cookieParser());
 
         this.app.use(cors({
-            origin: [process.env.VITE_CORS],
+            origin: process.env.VITE_CORS,
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
             credentials: true
         }));
@@ -39,6 +39,7 @@ class App {
 
         // error handler
         this.app.use((err, req, res, next) => {
+            console.error(err); // Log the error for debugging purposes
             if (!err.statusCode) {
                 err.statusCode = 500;
             }
