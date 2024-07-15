@@ -2,10 +2,17 @@ const validation = require('../middlewares/validation');
 const User = require("../models/User");
 const Service = require('../helpers/Service');
 const bcrypt = require('bcryptjs');
-const service = require("./AuthController");
+const jwt = require("jsonwebtoken");
 
-const createToken = (id) => {
-
+const createToken = (_id, res) => {
+    const token = jwt.sign({_id}, process.env.JWT_SECRET, {});
+    // send token to client cookies
+    res.cookie('token', token, {
+        httpOnly: true ,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        expires: new Date(Date.now() + 3600 * 60 * 60 * 1000),
+    });
 }
 
 const register = async (req, res) => {
@@ -46,7 +53,8 @@ const login = async (req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(400).json({error: 'Account not found'});
 
-
+        // create and set token
+        createToken(user._id, res);
 
         return res.status(200).json(user);
     } catch (e) {
@@ -54,8 +62,27 @@ const login = async (req, res) => {
     }
 }
 
+const checkAuth = (req, res) => {
+    try {
+        return res.status(200).json(req.user);
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+const logout = (req, res) => {
+    try {
+        res.clearCookie('token');
+        return res.status(200).json('Logged out');
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
 module.exports = {
     login,
-    register
+    register,
+    checkAuth,
+    logout
 }
 
