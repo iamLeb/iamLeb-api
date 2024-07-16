@@ -47,18 +47,18 @@ const login = async (req, res) => {
 
         // check if email exist
         const user = await service.getByField(User, 'email', email);
-        if (!user) return res.status(400).json({error: 'Account not found'});
+        if (!user) return res.status(401).json({ error: 'Account not found'});
 
         // check if password matches
         const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(400).json({error: 'Account not found'});
+        if (!match) return res.status(401).json('Account not found');
 
         // create and set token
         createToken(user._id, res);
 
         return res.status(200).json(user);
     } catch (e) {
-        return res.status(400).send({ error: e.message });
+        // return res.status(400).json({ error: e.message });
     }
 }
 
@@ -66,7 +66,7 @@ const checkAuth = (req, res) => {
     try {
         return res.status(200).json(req.user);
     } catch (e) {
-        return res.status(400).send({ error: e.message });
+        return res.status(400).json({ error: e.message });
     }
 }
 
