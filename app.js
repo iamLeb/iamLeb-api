@@ -26,8 +26,8 @@ class App {
     }
 
     routes() {
-        this.app.get('/', (req, res) => {
-            res.status(200).json('index');
+        this.app.get('/ping', (req, res) => {
+            res.status(200).json('Server is Running');
         });
 
         this.app.use('/auth', require('./routes/auth'));
