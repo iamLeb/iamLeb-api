@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const AuthController = require("../controllers/AuthController");
-const verifyToken = require("../middlewares/VerifyToken");
+const verifyToken = require("../middlewares/verifyToken");
 
 router.post("/login", AuthController.login);  // Fixed: added a slash before "login"
 router.post("/register", AuthController.register);
