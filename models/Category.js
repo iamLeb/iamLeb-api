@@ -8,7 +8,7 @@ const CategorySchema = new mongoose.Schema({
     short: String,
     overview: String,
     services: [String],
-    why: String,
+    why: [String],
     proceed: String,
 
 }, { timestamps: true });

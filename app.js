@@ -35,6 +35,7 @@ class App {
         this.app.use('/contact', require('./routes/contact'));
         this.app.use('/client', require('./routes/client'));
         this.app.use('/category', require('./routes/category'));
+        this.app.use('/portfolio', require('./routes/portfolio'));
     }
 
     start() {
