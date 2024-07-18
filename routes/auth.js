@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const AuthController = require("../controllers/AuthController");
-const verifyToken = require("../middlewares/verifyToken");
+const verifyToken = require("../middlewares/verifyToken"); // made this file lowercase
 
 router.post("/login", AuthController.login);  // Fixed: added a slash before "login"
 router.post("/register", AuthController.register);
