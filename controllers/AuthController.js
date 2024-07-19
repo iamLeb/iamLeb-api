@@ -4,8 +4,6 @@ const Service = require('../helpers/Service');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
-const jwt = require('jsonwebtoken');
-
 const createToken = (_id, res) => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: '1h' }); // Set JWT expiration to 1 hour
     // send token to client cookies
