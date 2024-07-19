@@ -11,12 +11,11 @@ const createToken = (_id, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
         sameSite: 'none',
-        expires: new Date(Date.now() + 3600 * 1000), // Set cookie expiration to 1 hour
         path: '/', // Ensure the cookie is accessible throughout the site
+        maxAge: 3600000, // Set cookie expiration to 1 hour
     });
 };
 
-module.exports = createToken;
 
 
 
