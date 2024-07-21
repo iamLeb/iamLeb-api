@@ -5,6 +5,7 @@ const User = require('../models/User');
 const verifyToken = async (req, res, next) => {
     const service = new Service();
     const token = req.cookies.token;
+    return res.json(token);
     if (!token) return res.status(401).json({error: 'Token not found'});
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) return res.status(401).json({error: 'Token not verified'});
