@@ -8,7 +8,6 @@ const createToken = (_id, res) => {
     const token = jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: '1h' }); // Set JWT expiration to 1 hour
     // send token to client cookies
     res.cookie('token', token, {
-        domain: 'https://iamleb.com',
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
         sameSite: 'lax',
