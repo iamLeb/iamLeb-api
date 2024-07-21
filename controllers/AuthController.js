@@ -9,7 +9,7 @@ const createToken = (_id, res) => {
     // send token to client cookies
     res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
+        secure: true, // Ensure this is true in production
         sameSite: 'lax',
         expire: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
     });
