@@ -5,13 +5,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id, res) => {
-    const token = jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: '1h' }); // Set JWT expiration to 1 hour
+    const token = jwt.sign({ _id }, process.env.JWT_SECRET); // Set JWT expiration to 1 hour
     // send token to client cookies
     res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
         sameSite: 'lax',
-        expire: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
     });
 };
 
