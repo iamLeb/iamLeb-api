@@ -10,9 +10,8 @@ const createToken = (_id, res) => {
     res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
-        sameSite: 'none',
-        path: '/', // Ensure the cookie is accessible throughout the site
-        maxAge: 3600000, // Set cookie expiration to 1 hour
+        sameSite: 'lax',
+        expire: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30)
     });
 };
 
