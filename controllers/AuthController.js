@@ -73,12 +73,17 @@ const checkAuth = (req, res) => {
 
 const logout = (req, res) => {
     try {
-        res.clearCookie('token');
-        return res.status(200).json('Logged out');
+        // Set the token cookie to expire immediately
+        res.cookie('token', '', { httpOnly: true, expires: new Date(0) });
+        return res.status(200).json({ message: 'Logged out' });
     } catch (e) {
-        return res.status(400).send({ error: e.message });
+        console.error('Error during logout:', e);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+module.exports = logout;
+
 
 module.exports = {
     login,
