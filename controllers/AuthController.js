@@ -11,6 +11,7 @@ const createToken = (_id, res) => {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
         sameSite: 'none',
+        domain: 'iamleb.com',
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // Set cookie expiration to 30 days
     });
 };
