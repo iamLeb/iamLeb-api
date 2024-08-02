@@ -13,8 +13,6 @@ const createToken = (_id, res) => {
         sameSite: 'none',
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // Set cookie expiration to 30 days
     });
-    localStorage.setItem('token', token);
-    return true;
 };
 
 
