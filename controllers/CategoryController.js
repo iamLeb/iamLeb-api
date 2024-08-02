@@ -25,6 +25,7 @@ const create = async (req, res) => {
 
 const read = async (req, res) => {
     try {
+        return res.status(200).json('Here')
         const service = new Service();
         const categories = await service.get(Category);
         // Return the data as JSON response
