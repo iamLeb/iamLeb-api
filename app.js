@@ -30,7 +30,7 @@ class App {
             //     }
             // },
             // methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            origin: 'http://localhost:8080',
+            origin: 'https://iamleb.com',
             credentials: true
         }));
     }
