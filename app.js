@@ -15,7 +15,7 @@ class App {
     }
 
     middlewares() {
-        const allowedOrigins = process.env.VITE_CORS.split(','); // Assuming VITE_CORS is a comma-separated list of origins
+        const allowedOrigins = process.env.VITE_CORS; // Assuming VITE_CORS is a comma-separated list of origins
 
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
